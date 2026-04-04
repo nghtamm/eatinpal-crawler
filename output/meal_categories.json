@@ -1,0 +1,116 @@
+[
+  {
+    "sourceID": "67e39ad43a265c60790a8f62",
+    "nameVI": "Các món khác",
+    "nameEN": "Other food dishes",
+    "slug": "cac-mon-khac"
+  },
+  {
+    "sourceID": "6960cd340d785b5b9b096b23",
+    "nameVI": "Các món chế biến sẵn",
+    "nameEN": "Ready-made foods",
+    "slug": ""
+  },
+  {
+    "sourceID": "69512ee4ea942b05c00be6f9",
+    "nameVI": "Các loại trái cây",
+    "nameEN": "Fresh fruits",
+    "slug": ""
+  },
+  {
+    "sourceID": "6951042411656994ae051673",
+    "nameVI": "Các món trứng, sữa và chế phẩm",
+    "nameEN": "Eggs, dairy products and derivatives",
+    "slug": ""
+  },
+  {
+    "sourceID": "694e0ba833b9141877035c73",
+    "nameVI": "Các món xôi, chè",
+    "nameEN": "Sticky rice dishes, sweet desserts",
+    "slug": ""
+  },
+  {
+    "sourceID": "6948cdd43d56d2ec5501e203",
+    "nameVI": "Các món bánh, kẹo",
+    "nameEN": "Pastries, snacks, candies",
+    "slug": ""
+  },
+  {
+    "sourceID": "67e39b114dcd62147809c7a2",
+    "nameVI": "Bánh canh, bánh đa, bún, cháo, súp, hoành thánh, hủ tiếu, miến, mỳ, phở, lẩu",
+    "nameEN": "Thick noodle soup, rice cracker noodles, rice vermicelli, congee, soup, wonton, hu tieu noodles, glass noodles, egg noodles, pho, hot pot",
+    "slug": ""
+  },
+  {
+    "sourceID": "69422894dcd46a3f1606db32",
+    "nameVI": "Món xào",
+    "nameEN": "Stir-fried dish",
+    "slug": ""
+  },
+  {
+    "sourceID": "6942262cc9271bbdd4040153",
+    "nameVI": "Món canh",
+    "nameEN": "Món canh",
+    "slug": ""
+  },
+  {
+    "sourceID": "67e39ab95b85385ce4045d92",
+    "nameVI": "Chè, các loại giải khát",
+    "nameEN": "Sweet soup, drinks",
+    "slug": ""
+  },
+  {
+    "sourceID": "6878691a58852296a403c549",
+    "nameVI": "Cơm các loại",
+    "nameEN": "A variety of rice dishes",
+    "slug": ""
+  },
+  {
+    "sourceID": "67e39a7da668dc6d03061232",
+    "nameVI": "Các loại bánh",
+    "nameEN": "Cakes",
+    "slug": ""
+  },
+  {
+    "sourceID": "67e39b77ab34d0b66a08bd33",
+    "nameVI": "Giải khát",
+    "nameEN": "Drinks",
+    "slug": ""
+  },
+  {
+    "sourceID": "67e39b8c1166e4f8bd022e32",
+    "nameVI": "Ngao, ốc",
+    "nameEN": "Clams, snails",
+    "slug": ""
+  },
+  {
+    "sourceID": "67dbeb385cc65069b7081292",
+    "nameVI": "Bánh đa, bún, phở",
+    "nameEN": "Thick rice noodle, rice vermicelli, pho",
+    "slug": ""
+  },
+  {
+    "sourceID": "6904338a86c15418dd0d5e02",
+    "nameVI": "Bún, cơm, xôi, cháo",
+    "nameEN": "Vermicelli, rice, sticky rice, porridge",
+    "slug": ""
+  },
+  {
+    "sourceID": "67dbebd75cc65069b7081293",
+    "nameVI": "Cơm, cháo, xôi",
+    "nameEN": "Fried rice, rice congee, sticky rice",
+    "slug": ""
+  },
+  {
+    "sourceID": "69042a7bd96ee1f60a01394a",
+    "nameVI": "Chè, caramen, kem",
+    "nameEN": "Sweet soup, caramel pudding, ice cream",
+    "slug": ""
+  },
+  {
+    "sourceID": "67e39a99ab34d0b66a08bd32",
+    "nameVI": "Burger, pizza",
+    "nameEN": "Burger, pizza",
+    "slug": ""
+  }
+]
