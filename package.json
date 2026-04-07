@@ -15,9 +15,10 @@
     }
   },
   "scripts": {
+    "prepare": "tsc",
     "build": "tsc",
-    "crawl": "NODE_OPTIONS='--insecure-http-parser' tsx src/data-crawl.ts",
-    "process": "tsx src/data-process.ts"
+    "crawl": "NODE_OPTIONS='--insecure-http-parser' tsx src/crawler.ts",
+    "transform": "tsx src/transformer.ts"
   },
   "dependencies": {
     "axios": "^1.14.0"

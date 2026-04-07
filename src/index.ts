@@ -1,9 +1,9 @@
 export * from './types.js';
-export { crawlFoods, crawlMeals, crawlAllData } from './crawl.js';
+export { crawlFoods, crawlMeals, crawlAllData } from './crawler.js';
 export {
   processFoods,
   processMeals,
   processAllData,
   readAllRawData,
   getProcessedData,
-} from './process.js';
+} from './transformer.js';

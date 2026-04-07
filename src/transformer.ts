@@ -157,7 +157,7 @@ function save(filePath: string, data: unknown) {
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-  console.log(`[PROCESS] Saved: ${filePath}`);
+  console.log(`[PROCESS] Saved at: ${filePath}`);
 }
 
 async function main() {
