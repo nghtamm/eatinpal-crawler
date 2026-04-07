@@ -1,17 +1,6 @@
 import fs from "fs";
 import path from "path";
-import type {
-  RawFood,
-  RawMeal,
-  Food,
-  Meal,
-  FoodCategory,
-  MealCategory,
-  Nutrient,
-  MealNutrient,
-  Equivalence,
-  ProcessedData,
-} from "./types.js";
+import type { RawFood, RawMeal, Food, Meal, FoodCategory, MealCategory, FoodNutrient, MealNutrient, Equivalence, ProcessedData } from "./types.js";
 
 function toNumber(v: unknown): number | null {
   if (v === "" || v === null || v === undefined) return null;
@@ -20,7 +9,7 @@ function toNumber(v: unknown): number | null {
 }
 
 function mapFood(raw: RawFood): Food {
-  const nutrients: Nutrient[] = (raw.nutrition || []).map((n) => ({
+  const nutrients: FoodNutrient[] = (raw.nutrition || []).map((n) => ({
     nameVI: n.name,
     nameEN: n.name_en,
     value: toNumber(n.value),
@@ -40,28 +29,24 @@ function mapFood(raw: RawFood): Food {
 }
 
 function mapMeal(raw: RawMeal): Meal {
-  const nutrients: MealNutrient[] = (raw.nutritional_components || []).map(
-    (n) => {
-      const equivalences: Equivalence[] = (
-        n.equivalenceComponents || []
-      ).map((eq) => ({
-        nameVI: eq.name,
-        nameEN: eq.nameEn,
-        key: eq.key,
-        value: toNumber(eq.amount),
-        unit: eq.unit_name,
-      }));
+  const nutrients: MealNutrient[] = (raw.nutritional_components || []).map((n) => {
+    const equivalences: Equivalence[] = (n.equivalenceComponents || []).map((eq) => ({
+      nameVI: eq.name,
+      nameEN: eq.nameEn,
+      key: eq.key,
+      value: toNumber(eq.amount),
+      unit: eq.unit_name,
+    }));
 
-      return {
-        nameVI: n.name,
-        nameEN: n.nameEn,
-        key: n.key,
-        value: toNumber(n.amount),
-        unit: n.unit_name,
-        equivalences,
-      };
-    },
-  );
+    return {
+      nameVI: n.name,
+      nameEN: n.nameEn,
+      key: n.key,
+      value: toNumber(n.amount),
+      unit: n.unit_name,
+      equivalences,
+    };
+  });
 
   return {
     sourceID: raw._id,
@@ -120,10 +105,7 @@ export function processMeals(raw: RawMeal[]): Meal[] {
   return raw.map(mapMeal);
 }
 
-export function processData(
-  rawFoods: RawFood[],
-  rawMeals: RawMeal[],
-): ProcessedData {
+export function processAllData(rawFoods: RawFood[], rawMeals: RawMeal[]): ProcessedData {
   const foods = processFoods(rawFoods);
   const meals = processMeals(rawMeals);
   return {
@@ -134,43 +116,40 @@ export function processData(
   };
 }
 
-export function loadRawData(dir?: string): {
+export function getProcessedData(dir?: string): ProcessedData {
+  const raw = readAllRawData(dir);
+  return processAllData(raw.foods, raw.meals);
+}
+
+export function readAllRawData(dir?: string): {
   foods: RawFood[];
   meals: RawMeal[];
 } {
   const d = dir || path.resolve(__dirname, "../output");
-  const foods: RawFood[] = JSON.parse(
-    fs.readFileSync(path.join(d, "foods_raw.json"), "utf-8"),
-  );
-  const meals: RawMeal[] = JSON.parse(
-    fs.readFileSync(path.join(d, "meals_raw.json"), "utf-8"),
-  );
+  const foods: RawFood[] = JSON.parse(fs.readFileSync(path.join(d, "foods", "raw.json"), "utf-8"));
+  const meals: RawMeal[] = JSON.parse(fs.readFileSync(path.join(d, "meals", "raw.json"), "utf-8"));
   return { foods, meals };
 }
 
-function save(name: string, data: unknown) {
-  const dir = path.resolve(__dirname, "../output");
+function save(filePath: string, data: unknown) {
+  const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  const dest = path.resolve(dir, name);
-  fs.writeFileSync(dest, JSON.stringify(data, null, 2), "utf-8");
-  console.log(`Saved: ${dest}`);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+  console.log(`[PROCESS] Saved: ${filePath}`);
 }
 
 async function main() {
-  const raw = loadRawData();
-  const result = processData(raw.foods, raw.meals);
+  const raw = readAllRawData();
+  const result = processAllData(raw.foods, raw.meals);
 
-  console.log(
-    `Processed: ${result.foods.length} foods, ${result.meals.length} meals`,
-  );
-  console.log(
-    `Categories: ${result.foodCategories.length} food, ${result.mealCategories.length} meal`,
-  );
+  console.log(`[PROCESS] Processed: ${result.foods.length} foods, ${result.meals.length} meals`);
+  console.log(`[PROCESS] Categories: ${result.foodCategories.length} food, ${result.mealCategories.length} meal`);
 
-  save("foods.json", result.foods);
-  save("meals.json", result.meals);
-  save("food_categories.json", result.foodCategories);
-  save("meal_categories.json", result.mealCategories);
+  const dir = path.resolve(__dirname, "../output");
+  save(path.join(dir, "foods", "items.json"), result.foods);
+  save(path.join(dir, "foods", "categories.json"), result.foodCategories);
+  save(path.join(dir, "meals", "items.json"), result.meals);
+  save(path.join(dir, "meals", "categories.json"), result.mealCategories);
 }
 
 if (require.main === module) {

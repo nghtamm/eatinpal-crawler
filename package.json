@@ -6,6 +6,7 @@
   "license": "UNLICENSED",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": ["dist", "output"],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -15,8 +16,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "crawl": "NODE_OPTIONS='--insecure-http-parser' tsx src/crawl.ts",
-    "process": "tsx src/process.ts"
+    "crawl": "NODE_OPTIONS='--insecure-http-parser' tsx src/data-crawl.ts",
+    "process": "tsx src/data-process.ts"
   },
   "dependencies": {
     "axios": "^1.14.0"

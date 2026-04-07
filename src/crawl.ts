@@ -13,18 +13,11 @@ const API = {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-function log(
-  level: string,
-  source: string,
-  msg: string,
-) {
+function log(level: string, source: string, msg: string) {
   console.log(`[${new Date().toISOString()}] [${level}] [${source}] ${msg}`);
 }
 
-async function paginate<T>(
-  url: string,
-  source: string,
-): Promise<T[]> {
+async function crawl<T>(url: string, source: string): Promise<T[]> {
   const rows: T[] = [];
   let page = 1;
   const t0 = Date.now();
@@ -47,11 +40,7 @@ async function paginate<T>(
 
       const total = data.total || 0;
       const percent = total > 0 ? ((rows.length / total) * 100).toFixed(1) : "?";
-      log(
-        "INFO",
-        source,
-        `Page ${page}: +${items.length} | ${rows.length}/${total} (${percent}%) | ${Date.now() - t1}ms`,
-      );
+      log("INFO", source, `Page ${page}: +${items.length} | ${rows.length}/${total} (${percent}%) | ${Date.now() - t1}ms`);
 
       if (total > 0 && rows.length >= total) break;
     } catch (err: any) {
@@ -69,14 +58,14 @@ async function paginate<T>(
 }
 
 export async function crawlFoods(): Promise<RawFood[]> {
-  return paginate<RawFood>(API.foods, "FOODS");
+  return crawl<RawFood>(API.foods, "FOODS");
 }
 
 export async function crawlMeals(): Promise<RawMeal[]> {
-  return paginate<RawMeal>(API.meals, "MEALS");
+  return crawl<RawMeal>(API.meals, "MEALS");
 }
 
-export async function crawlData(): Promise<{
+export async function crawlAllData(): Promise<{
   foods: RawFood[];
   meals: RawMeal[];
 }> {
@@ -85,18 +74,18 @@ export async function crawlData(): Promise<{
   return { foods, meals };
 }
 
-function save(name: string, data: unknown) {
-  const dir = path.resolve(__dirname, "../output");
+function save(filePath: string, data: unknown) {
+  const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  const dest = path.resolve(dir, name);
-  fs.writeFileSync(dest, JSON.stringify(data, null, 2), "utf-8");
-  log("OK", "SAVE", dest);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+  log("OK", "SAVE", filePath);
 }
 
 async function main() {
-  const { foods, meals } = await crawlData();
-  save("foods_raw.json", foods);
-  save("meals_raw.json", meals);
+  const dir = path.resolve(__dirname, "../output");
+  const { foods, meals } = await crawlAllData();
+  save(path.join(dir, "foods", "raw.json"), foods);
+  save(path.join(dir, "meals", "raw.json"), meals);
 }
 
 if (require.main === module) {

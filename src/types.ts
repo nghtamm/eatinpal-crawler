@@ -63,7 +63,7 @@ export interface FoodCategory {
   nameEN: string;
 }
 
-export interface Nutrient {
+export interface FoodNutrient {
   nameVI: string;
   nameEN: string;
   value: number | null;
@@ -78,7 +78,7 @@ export interface Food {
   categoryVI: string;
   categoryEN: string;
   energy: number | null;
-  nutrients: Nutrient[];
+  nutrients: FoodNutrient[];
 }
 
 export interface MealCategory {
