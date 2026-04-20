@@ -12,14 +12,14 @@ export interface RawFood {
   name_vi: string;
   name_en: string;
   category: string;
-  categoryEn: string;
+  category_en: string;
   nutrition: RawFoodNutrient[];
   energy: number;
 }
 
 export interface RawMealEquivalence {
   name: string;
-  nameEn: string;
+  name_en: string;
   amount: number | string;
   unit_name: string;
   key: string;
@@ -27,12 +27,12 @@ export interface RawMealEquivalence {
 
 export interface RawMealNutrient {
   name: string;
-  nameEn: string;
+  name_en: string;
   amount: number | string;
   unit_id: string;
   unit_name: string;
   key: string;
-  equivalenceComponents?: RawMealEquivalence[];
+  equivalence_components?: RawMealEquivalence[];
 }
 
 export interface RawMeal {
@@ -110,7 +110,7 @@ export interface Meal {
   code: string;
   nameVI: string;
   nameEN: string;
-  nameAscii: string;
+  nameASCII: string;
   description: string;
   image: string;
   gender: number | null;

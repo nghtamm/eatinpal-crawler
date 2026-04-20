@@ -1,7 +1,5 @@
 import axios from 'axios';
-import fs from 'fs';
-import path from 'path';
-import type { RawFood, RawMeal } from './types.js';
+import type { RawFood, RawMeal } from './types';
 
 const PAGE_SIZE = 50;
 const DELAY = 1000;
@@ -39,8 +37,7 @@ async function crawl<T>(url: string, source: string): Promise<T[]> {
       rows.push(...items);
 
       const total = data.total || 0;
-      const percent =
-        total > 0 ? ((rows.length / total) * 100).toFixed(1) : '?';
+      const percent = total > 0 ? ((rows.length / total) * 100).toFixed(1) : '?';
       log(
         'INFO',
         source,
@@ -62,37 +59,19 @@ async function crawl<T>(url: string, source: string): Promise<T[]> {
   return rows;
 }
 
-export async function crawlFoods(): Promise<RawFood[]> {
+export async function CrawlFoods(): Promise<RawFood[]> {
   return crawl<RawFood>(API.foods, 'FOODS');
 }
 
-export async function crawlMeals(): Promise<RawMeal[]> {
+export async function CrawlMeals(): Promise<RawMeal[]> {
   return crawl<RawMeal>(API.meals, 'MEALS');
 }
 
-export async function crawlAllData(): Promise<{
+export async function CrawlAllData(): Promise<{
   foods: RawFood[];
   meals: RawMeal[];
 }> {
-  const foods = await crawlFoods();
-  const meals = await crawlMeals();
+  const foods = await CrawlFoods();
+  const meals = await CrawlMeals();
   return { foods, meals };
-}
-
-function save(filePath: string, data: unknown) {
-  const dir = path.dirname(filePath);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
-  log('OK', 'SAVE', filePath);
-}
-
-async function main() {
-  const dir = path.resolve(__dirname, '../output');
-  const { foods, meals } = await crawlAllData();
-  save(path.join(dir, 'foods', 'raw.json'), foods);
-  save(path.join(dir, 'meals', 'raw.json'), meals);
-}
-
-if (require.main === module) {
-  main().catch(console.error);
 }

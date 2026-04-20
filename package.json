@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist", "output"],
+  "files": ["dist"],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -16,16 +16,13 @@
   },
   "scripts": {
     "prepare": "tsc",
-    "build": "tsc",
-    "crawl": "NODE_OPTIONS='--insecure-http-parser' tsx src/crawler.ts",
-    "transform": "tsx src/transformer.ts"
+    "build": "tsc"
   },
   "dependencies": {
     "axios": "^1.14.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "tsx": "^4.21.0",
     "typescript": "^5.0.0"
   }
 }
