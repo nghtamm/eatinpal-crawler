@@ -1,7 +1,7 @@
 {
   "name": "eatinpal-crawler",
   "version": "1.0.0",
-  "description": "EatinPal Crawler for nutrition data",
+  "description": "Crawler for EatinPal API",
   "author": "nghtamm",
   "license": "UNLICENSED",
   "main": "dist/index.js",
